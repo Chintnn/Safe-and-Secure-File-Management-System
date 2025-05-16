@@ -1,0 +1,76 @@
+server:
+  port: 5000
+spring:
+  messages:
+    basename: messages
+    encoding: UTF-8
+  web:
+    locale: en
+    locale-resolver: fixed
+  profiles:
+    default: local  # Fixed typo from 'Default' to 'default'
+  devtools:
+    livereload:
+      enabled: true
+  servlet:
+    multipart:
+      maxFileSize: 1GB
+      maxRequestSize: 5GB
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/test?serverTimezone=UTC&autoReconnect=true&allowMultiQueries=true&characterEncoding=UTF-8  # Fixed typo in URL
+    username: root
+    password: chintan2004
+    hikari:
+      maximum-pool-size: 5
+      jdbc-url: ${spring.datasource.url}
+      username: ${spring.datasource.username}
+      password: ${spring.datasource.password}
+      driver-class-name: ${spring.datasource.driver-class-name}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: chintanpradhan15@gmail.com
+    password: gofoxttldrhmzglm
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+logging:
+  level:
+    root: INFO
+    org.springframework: DEBUG
+    org.hibernate: DEBUG
+    io.ahakim.file: DEBUG
+    org.springframework.mail: DEBUG
+    javax.mail: DEBUG
+mybatis:
+  type-aliases-package: io.ahakim.file.domain
+  mapper-locations: classpath*:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+jasypt:
+  encryptor:
+    password: ${JASYPT_ENCRYPTOR_PASSWORD}
+aws:
+  s3:
+    bucket: pbl31
+    region:
+      static: eu-north-1
+    credentials:
+      accessKey: ENC(mOnnmQrpPR+b5uA2udMeNoE17C50Uk6zPH17A+sKrhk=)
+      secretKey: ENC(OKPd5p6sMBczdSrOsdNWPQ+zckRpWveniOCrXiFIIe8zi3NBitsbxzGFGPikllpHeSEbIbLyqNw=)
+    stack:
+      auto: false

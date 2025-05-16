@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SkyShelf - Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Neubrutalism Base Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #F5F5F5;
+            margin: 0;
+            padding: 0;
+            color: #1A1A1A;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        #wrap {
+            max-width: 500px;
+            padding: 30px;
+            background: #E5E5E5;
+            border: 4px solid #1A1A1A;
+            box-shadow: 8px 8px 0 #1A1A1A;
+        }
+        .h2.title {
+            font-size: 32px;
+            font-weight: 900;
+            color: #1A1A1A;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #1A1A1A;
+        }
+
+        /* Form and Inputs */
+        .form-control {
+            border: 3px solid #1A1A1A;
+            background: #FFFFFF;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            margin-bottom: 15px;
+            box-shadow: 4px 4px 0 #1A1A1A;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .form-control:focus {
+            outline: none;
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 #1A1A1A;
+        }
+        .mb-3 {
+            margin-bottom: 25px;
+        }
+        label {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1A1A1A;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border: 3px solid #1A1A1A;
+            background: #007AFF;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 #1A1A1A;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 6px 6px 0 #1A1A1A;
+        }
+        .btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #1A1A1A;
+        }
+
+        /* Password Toggle */
+        .password-toggle {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .password-toggle input[type="checkbox"] {
+            margin-right: 8px;
+            accent-color: #FF2D55;
+        }
+
+        /* Links */
+        a {
+            color: #FF2D55;
+            font-weight: 700;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #007AFF;
+        }
+
+        /* Messages */
+        [th\\:if="${message}"], [th\\:if="${param.logout}"] {
+            color: #00D1B2;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        [th\\:if="${param.error}"] {
+            color: #FF3B30;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+    </style>
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <h1 class="h2 title">Login to SkyShelf</h1>
+    <main id="container">
+        <div th:if="${message}" th:text="${message}"></div>
+        <div th:if="${param.logout}" th:text="'Logged out successfully'"></div>
+        <div th:if="${param.error}" th:text="'Incorrect email or password'"></div>
+        <form method="post" th:action="@{/login}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" name="username" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Password</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+                <div class="password-toggle">
+                    <input type="checkbox" onclick="togglePassword()">
+                    <span>Show Password</span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        <div style="margin-top: 15px; text-align: center;">
+            <a href="/forgot-password">Forgot Password?</a> | <a href="/register">Register</a>
+        </div>
+    </main>
+</div>
+</body>
+</html>
